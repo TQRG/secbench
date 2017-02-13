@@ -1,2 +1,10 @@
 
 config.json
+
+.idea/misc.xml
+
+*.xml
+
+.idea/secbench.iml
+
+*.csv
