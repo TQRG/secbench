@@ -6,8 +6,9 @@ from github import Github
 import sys
 import re
 from tqdm import tqdm
-from datetime import datetime
 import time
+import git
+
 
 # get GitHub credentials from config.json file
 with open('config.json') as cf:
@@ -19,41 +20,60 @@ injection = re.compile('injection| xss |cross.*(site|zone) script|script injec')
 csrf = re.compile('(cross.*site request forgery| csrf |sea.*surf| xsrf |one.*click attack|session riding)');
 dns = re.compile('(dos |(denial.*of.*service) | ddos)');
 auth = re.compile('(unauthor.*(access|contr))');
-misc = re.compile('((fix|found).* (bug|vulnerab|problem|issue))|((secur|vulnerab).* problem)|secur|bug|vulnerab|problem');
+misc = re.compile('((fix|found).* (sec.* bug|vulnerab|problem|issue))|((secur|vulnerab).* problem)|secur|bug|vulnerab|problem');
 fileName = sys.argv[1].split('.')[0]
 
 
 def mine_repos(user, repos):
     # path for the new file
-    path = 'results/'+repos+'/'+sys.argv[1] +'/vulns.csv'
+    path = 'db/'+repos+'/'+sys.argv[1]+'/'
 
     # create output file if not exists
     os.makedirs(os.path.dirname(path), exist_ok=True)
 
-    # open new file
-    with open(path, 'w', newline='') as vf:
+    #repo = git.Repo.init(g.get_user(user).get_repo(repos).url)
+    repo = git.Repo.clone_from(g.get_user(user).get_repo(repos).clone_url, 'repos/' + user+'_'+repos + '/', branch='master')
 
-        a = csv.writer(vf, delimiter=',')
+    commits = list(repo.iter_commits());
 
-        # get commits for each repository
-        commits = g.get_user(user).get_repo(repos).get_commits(since=datetime(2000, 1, 1, 0, 0), until=datetime.now())
+    #with open(path+'/head/','wb') as fp:
+    #    repo.archive(fp)
+    n = 0;
+    for c in tqdm(commits):
 
-        # for each commit
-        for c in tqdm(commits):
+        if sys.argv[1] == "misc":
+            check = misc.search(c.message)
+        elif sys.argv[1] == "injection":
+            check = injection.search(c.message)
 
-            #print(c.commit.contents)
-            # check if the regular expression secureReg matches with the commit message
-            #if(sys.argv[1] == "injection"):
-            #    check = injection.search(c.commit.message)
-            if(sys.argv[1] == "misc"):
-                check = misc.search(c.commit.message)
+        parents = list(c.parents)
+        if check is not None and len(parents) > 0:
+            n += 1;
+            vulPath = path + 'vuln'+str(n)+'/';
+            os.makedirs(os.path.dirname(vulPath), exist_ok=True)
 
+            print(c)
 
+            repo.head.reference = c
+            with open(vulPath + 'Vfix.tar', 'wb') as fp:
+                repo.archive(fp)
 
-            # if check true
-            if check:
-                # write for the file the commit url and commit message
-                a.writerow([c.commit.url, c.commit.message])
+            if len(parents) == 1:
+                vulParent = parents[0]
+                print(parents[0])
+            elif len(parents) > 1:
+                vulParent = parents[1]
+                print(parents[1])
+
+            repo.head.reference = vulParent;
+
+            with open(vulPath + 'Vvul.tar', 'wb') as fp:
+                repo.archive(fp)
+
+            print('-----------')
+
+            for d in c.diff(vulParent, create_patch=True):
+                print(d)
 
 try:
 

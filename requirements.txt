@@ -1,2 +1,3 @@
 pygithub
 tqdm
+gitpython
