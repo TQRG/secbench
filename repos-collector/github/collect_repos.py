@@ -9,12 +9,11 @@ import json
 with open('config.json') as cf:
     data = json.load(cf)
 
-
 def get_repositories():
     print('Collecting information from GitHub repositories...')
 
     # save information about repositories in the csv file
-    with open('rc_' + sys.argv[1] + '.csv', 'w', newline='') as rf:
+    with open('repos_info.csv', 'w', newline='') as rf:
         a = csv.writer(rf, delimiter=',')
         i = 0
 
@@ -28,7 +27,7 @@ def get_repositories():
                 # save repository info in the file
                 a.writerow([str(repo.owner.login), repo.name])
 
-    print('Process Finished! Collect your csv file from the source folder.')
+    print('Process Finished! '+ sys.argv[1] + " repositories collected.")
 
 
 try:

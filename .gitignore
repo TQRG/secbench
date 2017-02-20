@@ -8,3 +8,5 @@ config.json
 .idea/secbench.iml
 
 *.csv
+
+repos-collector/github/config.json
