@@ -25,7 +25,7 @@ def get_repositories():
                 break
             else:
                 # save repository info in the file
-                a.writerow([str(repo.owner.login), repo.name])
+                a.writerow([str(repo.owner.login), repo.name, ''])
 
     print('Process Finished! '+ sys.argv[1] + " repositories collected.")
 
