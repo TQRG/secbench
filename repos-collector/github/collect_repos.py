@@ -18,7 +18,9 @@ def get_repositories():
         i = 0
 
         # for each repository
-        for repo in tqdm(g.get_repos(since=0)):
+        for repo in tqdm(g.search_repositories(query='language:java')):
+        #for repo in tqdm(g.get_repos(since=0)):
+            print(repo.get_languages())
             i += 1
             # stop the search
             if i > int(sys.argv[1]):
