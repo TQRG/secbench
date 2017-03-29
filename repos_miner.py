@@ -1,194 +1,217 @@
 import csv
 import json
 import os
-from github import BadCredentialsException
-from github import Github
 import sys
 import re
 from tqdm import tqdm
 import time
 import git
 import shutil
-import tarfile
 import os.path as osp
+from utils import *
+import requests
+from connect import *
+from db_op import *
 
+V_CLASS = sys.argv[1]
 
-# get GitHub credentials from config.json file
-with open('config.json') as cf:
-    data = json.load(cf)
+#Top 10 OSWAP 2013
+# injection (sql,ldap,xpath,xquery,xml,html,os commands).
+injec = re.compile('(sql|ldap|xpath|xquery|queries|xml|html|(shell|os|oper.* sys|command|cmd)).*injec|(fix|prevent|found|protect).* injec|injec.* (fix|prev|found|protect)');
+# broken authentication and access control
+auth = re.compile('(brute.*force|dict|sess.*hijack|broken auth).* (prevent|protect|fix)|(prevent|protect|fix).* (brute.*force|dict|sess.* hijack|broken auth)|(unauthor.*(access|contr))|vuln.* auth|plaintext pass.*|auth.* bypass|sess.* fixation|weak pass.* verif');
+# xss
+xss = re.compile('fix.* ( xss |cross.*(site|zone) script)|crlf injec|http resp.* split|(reflect|stored|dom).*xss|xss.*(reflect|stored|dom)|xss (vuln|prob|solution)| xss')
+# csrf
+csrf = re.compile('(cross.*site.*(req|ref).*forgery| csrf |sea.*surf| xsrf |(one.*click|autom).*attack|sess.*riding|conf.*deput)');
+# insecure direct object references
+# security misconfiguration
+# sensitive data exposure
+# missing function level access control
+# using known vulnerable components
+# unvalidated redirects and forwards
 
-# needs to be improved
-
-injection = re.compile(' xss |cross.*(site|zone) script|script injec|injection|(full)?.*path.*disclosure');
-csrf = re.compile('(cross.*site req.* forgery| csrf |sea.*surf| xsrf |one.*click attack|session riding)');
+# path traversal
 pathtrav = re.compile('((path|dir.*) traver.*|(dot-dot-slash|directory traversal|directory climbing|backtracking).*(attack|vuln))');
-dos = re.compile('( dos |((distributed)? denial.*of.*service) | ddos | deadlocks)');
+# denial of service
+dos = re.compile('( dos |((distributed)? denial.*of.*service)| ddos |deadlocks)');
+# sha-1 collision
+sha1 = re.compile('(sha-1|sha 1|sha1) collision');
+# misc
+misc = re.compile('(fix|found|prevent|protect).*sec.*(bug|vulnerab|problem|defect|warning|issue|weak|attack|flaw|fault|error)|sec.* (bug|vulnerab|problem|defect|warning|issue|weak|attack|flaw|fault|error).* (fix|found|prevent|protect)|vulnerab|attack');
+# memory leaks
+ml = re.compile('mem.* leak|(fix|inc).* mem.* alloc');
 
 bufover = re.compile('buff.* overflow')
+fpd = re.compile('(full)? path discl')
 nullp = re.compile('null pointers');
 resl = re.compile('res.* leaks');
-sha1 = re.compile('sha 1|sha1|sha-1|(sha-1|sha 1|sha1) collision');
-ml = re.compile('mem.* (leak|alloc)|fix malloc');
 hl = re.compile('hand.* (leak|alloc)');
 encryp = re.compile('encryp.* (bug|vulnerab|problem|defect|warning|issue|weak|attack|flaw|fault|error)')
-auth = re.compile('(unauthor.*(access|contr))|vuln.* auth|plaintext pass.*|auth.* bypass|sess.* fixation|weak pass.* verification');
-misc = re.compile('((fix|found|prevent|protect)?.*sec.* (bug|vulnerab|problem|defect|warning|issue|weak|attack|flaw|fault|error)(fix|found|prevent|protect)?.*)|vulnerab|attack');
-
-fileName = sys.argv[1].split('.')[0]
-
-def check_if_dir_exists(path):
-    d=os.path.dirname(path);
-    if not os.path.exists(d):
-        os.makedirs(d)
 
 
-def make_tarfile(output_filename, source_dir):
-    with tarfile.open(output_filename, "w") as tar:
-        tar.add(source_dir, arcname=os.path.basename(source_dir))
+def add_blobs(diff,vulPath):
+    for f in diff:
+        if f.a_blob is not None:
+            pathA=vulPath + 'Vdiff/added/' + f.a_path;
+            check_if_dir_exists(pathA)
+            try:
+                f.a_blob.stream_data(open(pathA, 'wb'))
+            except Exception as ex:
+                print 'Ex:', ex
+        if f.b_blob is not None:
+            pathB=vulPath + 'Vdiff/deleted/' + f.b_path;
+            check_if_dir_exists(pathB)
+            try:
+                f.b_blob.stream_data(open(pathB, 'wb'))
+            except Exception as ex:
+                print 'Ex:', ex
 
-def mine_repos(user, repos):
-    # path for the new file
-    path = 'db/'+user+'_'+repos+'/'+sys.argv[1]+'/'
-    print(path)
-    global vuls;
+def save_results(conn, start, datetime,vuls):
+    stop = time.time()
+    t = stop-start;
+    conn.incr('stats:experiment:n')
+    add_experiment(conn, datetime, V_CLASS, t, vuls)
+    if os.path.exists('repos/'):
+        remove_dir('repos')
+    if os.path.exists('db/'):
+        remove_dir('db')
 
-    # create output file if not exists
+def mine_repos(user, repos, br):
+
+    global conn, g , V_CLASS, bucket;
+
+    id_repo = user+'_'+repos;
+    print(id_repo)
+    path = 'db/'+id_repo+'/'+V_CLASS+'/'
+
     try:
+        # create output file if not exists
         os.makedirs(os.path.dirname(path))
     except OSError as e:
-        if e.errno != errno.EEXIST:
-            raise
+        print(e)
 
-    repo = git.Repo.clone_from(g.get_user(user).get_repo(repos).clone_url, 'repos/' + user+'_'+repos + '/', branch='master')
-
+    print('Downloading...')
+    c_url = g.get_user(user).get_repo(repos).clone_url
+    repo = git.Repo.clone_from(c_url, 'repos/' + id_repo + '/', branch=br)
     commits = list(repo.iter_commits());
+    print('Downloaded...')
 
     n = 0;
     for c in tqdm(commits):
 
-        # classes
-        if sys.argv[1] == "misc":
-            check = misc.search(c.message)
-        elif sys.argv[1] == "injec":
-            check = injection.search(c.message)
-        elif sys.argv[1] == "csrf":
-            check = csrf.search(c.message)
-        elif sys.argv[1] == "dos":
-            check = dos.search(c.message)
-        elif sys.argv[1] == "auth":
-            check = auth.search(c.message)
-        elif sys.argv[1] == "ml":
-            check = ml.search(c.message)
-        elif sys.argv[1] == "pathtrav":
-            check = pathtrav.search(c.message)
-        elif sys.argv[1] == "encrypt":
-            check = encryp.search(c.message)
+        message = c.message
 
-
+        if V_CLASS == "misc":
+            check = misc.search(message)
+        elif V_CLASS == "injec":
+            check = injec.search(message)
+        elif V_CLASS == "csrf":
+            check = csrf.search(message)
+        elif V_CLASS == "dos":
+            check = dos.search(message)
+        elif V_CLASS == "auth":
+            check = auth.search(message)
+        elif V_CLASS == "ml":
+            check = ml.search(message)
+        elif V_CLASS == "pathtrav":
+            check = pathtrav.search(message)
+        elif V_CLASS == "xss":
+            check = xss.search(message)
+        elif V_CLASS == "sha1":
+            check = sha1.search(message)
 
         parents = list(c.parents)
-        if check is not None and len(parents) > 0:
-            n += 1;
-            vuls+=1;
 
-            vulPath = path + 'vuln'+str(n)+'/';
-            os.makedirs(os.path.dirname(vulPath))
+        if check is not None and len(parents) > 0 and commit_exists(conn, user, repos, str(c), str(V_CLASS)) == False:
+            n += 1;
+
+            print(c)
+            vpath = path + 'vuln'+ str(n) +'/';
+
+            os.makedirs(os.path.dirname(vpath))
             repo.head.reference = c
-            with open(vulPath + 'Vfix.tar', 'wb') as vf:
-                repo.archive(vf)
+
+            bpath = id_repo + '/'+ V_CLASS +'/'+ 'vuln'+str(n)+'/'
+
+            archive_vuln(vpath + 'Vfix.tar', repo)
+
+            send_blob(bpath + 'Vfix.tar', vpath + 'Vfix.tar', bucket)
 
             if len(parents) == 1:
                 vulParent = parents[0]
             elif len(parents) > 1:
                 vulParent = parents[1]
 
+            diff = c.diff(vulParent, create_patch=True)
+            if len(diff) == 0:
+                vulParent = parents[0]
+                diff = c.diff(vulParent, create_patch=True)
+
             repo.head.reference = vulParent;
 
-            with open(vulPath + 'Vvul.tar', 'wb') as vv:
-                repo.archive(vv)
+            archive_vuln(vpath + 'Vvul.tar', repo)
+            send_blob(bpath + 'Vvul.tar', vpath + 'Vvul.tar', bucket)
 
-            a.writerow([vuls,n,
-                        path,
-                        sys.argv[1],
-                        c,
-                        vulParent,
-                        '',
-                        '',
-                        '',
-                        '',
-                        '',
-                        '',
-                        ''])
+            commit_url = g.get_user(user).get_repo(repos).get_commit(str(c)).html_url;
 
-            diff = c.diff(vulParent, create_patch=True)
+            if commit_exists(conn, user, repos, str(c), V_CLASS) == False:
+                add_commit(conn, n, user, repos, V_CLASS, str(c), vulParent, '', '', '', '', commit_url)
+                conn.incr('stats:commit:n')
+                conn.incr('stats:commit:%s:%s'%(user,repos))
+                conn.incr('stats:commit:%s'%V_CLASS)
 
-            # a few diffs give an empty array (fix this)
-            if len(diff) > 0:
-                for f in diff:
-                    #print(f)
-                    if f.a_blob is not None:
-                        pathA=vulPath + 'Vdiff/added/' + f.a_path;
-                        check_if_dir_exists(pathA)
-                        f.a_blob.stream_data(open(pathA, 'wb'))
-                    if f.b_blob is not None:
-                        pathB=vulPath + 'Vdiff/deleted/' + f.b_path;
-                        check_if_dir_exists(pathB)
-                        f.b_blob.stream_data(open(pathB, 'wb'))
-                make_tarfile(vulPath + 'Vdiff.tar',vulPath + 'Vdiff')
-                shutil.rmtree(vulPath + 'Vdiff')
+            add_blobs(diff,vpath)
 
-    if n == 0:
-        shutil.rmtree(path)
+            make_tarfile(vpath + 'Vdiff.tar', vpath + 'Vdiff')
+            send_blob(bpath + 'Vdiff.tar', vpath + 'Vdiff.tar', bucket)
+            shutil.rmtree(vpath + 'Vdiff')
+
+    shutil.rmtree(path)
     return n;
 
-
-try:
-
-    # authentication for Github API
-    g = Github(data['github']['username'], data['github']['token'])
-
     # check arguments
-    if (len(sys.argv) > 3
-        or isinstance(sys.argv[2], str) is False):
-        print("Usage: repos_miner.py <class> <filename>")
-        sys.exit(0)
-
-    rf = open(sys.argv[2], 'r')
-    r = csv.reader(rf, delimiter=',')
-    res = open("results.txt", "w+")
-
-    cfi = open('results.csv','a')
-    a = csv.writer(cfi, delimiter=',')
-    a.writerow(['id','idf',
-                'path',
-                'type',
-                'sha',
-                'sha-p',
-                'line',
-                'TP',
-                'FP',
-                'FN',
-                'other',
-                'result',
-                'observations'])
-
-
-    start = time.clock()
-    vuls=0;
-
-    for (user, repos, check) in r:
-    # mine each repository
-        if check == 'x':
-            mine_repos(user, repos)
-            shutil.rmtree('repos/' + user+'_'+repos + '/')
-    shutil.rmtree('repos/')
-    stop = time.clock()
-    timeSpent = stop-start;
-    res.write("Time: %s" % timeSpent + "\n")
-    res.write("NoVuls: %s" % vuls + " \n")
-
-    print("Process finished! Check results folder.")
-
-except BadCredentialsException as e:
-    print('\nSomething went wrong, check your GitHub informations on the config.json file.')
+if (len(sys.argv) != 2):
+    print("Usage: python repos_miner.py <class>")
     sys.exit(0)
+
+g = connect_to_github('config.json');
+conn = connect_to_db('redis.json');
+sgc = connect_to_gcloud_storage();
+bucket = get_bucket(sgc, 'secbench1');
+
+# get normal repositories
+repos = get_repos_n(conn)
+
+# datetime
+datetime = time.strftime("%x") + ':' + time.strftime("%X");
+
+# start measuring time
+start = time.time()
+
+# number of caught vulnerabilities
+vuls = 0;
+
+# mine each repository
+try:
+    for r in repos[0]:
+        repo_info = get_repos_info(conn,r)[0]
+        owner = repo_info['owner']
+        name = repo_info['name']
+        branch = repo_info['branch']
+        if class_mined(conn, owner, name, V_CLASS) == False:
+            print('I\'m mining '+ owner +'/'+ name)
+            vuls += mine_repos(owner, name, branch)
+            set_class_mined(conn, owner, name, V_CLASS)
+            add_repos_to_exp(conn, datetime, V_CLASS, owner, name)
+        else:
+            print(owner +'/'+ name+ ' already mined for '+ V_CLASS +' class')
+
+        if os.path.exists('repos/'+ owner + '_' + name + '/'):
+            remove_dir('repos/'+ owner + '_' + name)
+
+    print('Process finished! Check results folder.')
+    save_results(conn, start, datetime, vuls)
+except KeyboardInterrupt:
+    print('You have interrupted the process! Please wait, we are saving all the information.')
+    save_results(conn, start, datetime, vuls)
