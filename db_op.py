@@ -1,11 +1,11 @@
 from connect import *
 
-def commit_exists(conn,user , repo, sha, v_class):
+def commit_exists(conn,user, repo, sha, v_class):
     return conn.exists('commit:%s:%s:%s:%s'%(user, repo, sha, v_class));
 
 def add_commit(r, idf, user, repo, vclass, sha, shap, vuln, line, tool_res, obs, commit_url):
     pip = r.pipeline();
-    pip.hmset('commit:%s:%s:%s'%(user, repo, sha), {
+    pip.hmset('commit:%s:%s:%s:%s'%(user, repo, sha, vclass), {
             'id_f': idf,
             'repo_owner': user,
             'repo_name': repo,
@@ -13,7 +13,7 @@ def add_commit(r, idf, user, repo, vclass, sha, shap, vuln, line, tool_res, obs,
             'sha': sha,
             'sha-p': shap,
             'vuln?': vuln,
-            'line': line, 'T':'', 'resT':tool_res, 'observations':obs, 'commit_url': commit_url
+            'line': line, 'T':'', 'resT':tool_res, 'observations':obs, 'commit_url': commit_url, 'forked?':'', 'forked_from':''
             })
     res = pip.execute()
     return res;
