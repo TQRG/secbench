@@ -15,7 +15,8 @@ def remove_dir(path):
                 shutil.rmtree(file_path)
         except Exception as e:
             print(e)
-    shutil.rmtree(path+'/')
+    if os.path.exists(path+'/'):
+        shutil.rmtree(path+'/')
 
 def check_if_dir_exists(path):
     d=os.path.dirname(path);

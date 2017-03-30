@@ -214,6 +214,4 @@ try:
     save_results(conn, start, datetime, vuls)
 except KeyboardInterrupt:
     print('You have interrupted the process! Please wait, we are saving all the information.')
-    if os.path.exists('repos/'+ owner + '_' + name + '/'):
-        remove_dir('repos/'+ owner + '_' + name)
     save_results(conn, start, datetime, vuls)
