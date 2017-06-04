@@ -2,11 +2,11 @@
 
 This is the tool used to mine security patterns from Github 238 repositories whose results you can check on our [website's](https://github.com/TQRG/secbench) repository.
 
-* Integration with Redis and Google Cloud Storage
+* Integration with Github, Redis and Google Cloud Storage
 
-###### Set Up
+###### Installation 
 
-* TBA
+* Soon
 
 ![alt](https://github.com/TQRG/secbench/blob/master/static/images/methodology.png?raw=true)
 
