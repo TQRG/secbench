@@ -6,7 +6,7 @@ This is the tool used to mine security patterns from Github 238 repositories who
 
 ###### Installation 
 
-* Soon
+* TBA
 
 ![alt](https://github.com/TQRG/secbench/blob/master/static/images/methodology.png?raw=true)
 
