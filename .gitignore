@@ -1,8 +1,7 @@
 
 config.json
-
 .idea/misc.xml
-
+*.DS_Store
 *.xml
 
 .idea/secbench.iml
