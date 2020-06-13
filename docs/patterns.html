@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109337724-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-109337724-1');
+    </script>
+    <title>Secbench</title>
+<meta charset="utf-8">
+<meta name="description" content="Study about the performance and coverage of open-source static analysis tools when scanning for real security vulnerabilities mined from GitHub.">
+<meta name="author"      content="Sofia Reis & Rui Maranhão">
+    <!-- user-scalable=no does not allow zoom, just allows the user to scroll--->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+  </head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+  <body>
+
+
+
+    <nav class="navbar navbar-default navbar-static-top">
+    <div class="container-fluid">
+    <div class="navbar-header">
+
+      <a class="navbar-brand" href="index.html">SECBENCH</a>
+    </div>
+    </div>
+    </nav>
+
+    <div id="intro">
+    <div class="title">
+    <a href="https://github.com/TQRG/secbench-mining-tool"><h1>SECBENCH <i class="fa fa-github" aria-hidden="true"></i></h1></a>
+    <span class="label">#security</span><span class="label">#benchmark</span><span class="label">#staticanalysis</span>
+    </div>
+    </div>
+
+    <div id="about">
+      <h1 id="projs"> Patterns - Top 2017 OSWAP
+      </h1>
+    </div>
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(sql%7Chttp%20header%7Cxxe%7Cnosql%7Cldap%7Cregex%7Cxpath%7Cxquery%7Ccode%7Cqueries%7Cxml%7Chtml%7C(shell%7Cos%20%7Coper.*%20sys%7Ccommand%7Ccmd)%7Ce(-)%3Fmail).*injec%7C(patch%7Cfix%7Cprevent%7Cfound%7Cprotect).*(injec%7C%20sqli%20%7C%20osci%20)%7C(injec%7Csqli%20%7Cosci%20).*(patch%7Cfix%7Cprevent%7Cfound%7Cprotect)%7C(sanitiz).*%20header(s)%3F%7Cheader(s)%3F(%20sanitiz)%7Cquer.*%20parametriz%7C(parametriz).*%20quer' >A1 - Injection (injec) </a>
+
+        </div>
+          <img src="img/injection.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#brute.*force%7Csess.*hijack%7Cbroken%20auth%7Cauth.*%20brok%7Cauth.*%20bypass%7Csess.*%20fixation%7C(cred%7Cpass%7Csession(%20)%3Fid%7Cconnect).*(plaintext%7Cun(hash%7Csalt%7Cencrypt%7Csafe))%7C(plaintext%7Cun(hash%7Csalt%7Cencrypt%7Csafe)).*(cred%7Cpass%7Csession(%20)%3Fid%7Cconnect)%7C(weak%7Cbad%7Cunsafe).*%20pass.*%20verif%7Cfix.*%20(url%20rewriting%7Crewriting%20url)%7Ctimeout.*(session%7Cauth.*%20token)
+' >A2 - Broken Authentication and Session Management (auth) </a>
+
+        </div>
+          <img src="img/auth.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(fix%7Cprevent%7Cprotect%7Cfound%7Cpatch).*%20(xss%7Ccross.*(site%7Czone)%20script%7Cscript.*%20attack)%7C(xss%7Ccross.*(site%7Czone)%20script%7Cscript.*%20attack).*%20(fix%7Cprevent%7Cprotect%7Cfound%7Cpatch)%7Ccrlf%20injec%7Chttp%20resp.*%20split%7C(reflect%7Cstored%7Cdom).*xss%7Cxss.*(reflect%7Cstored%7Cdom)%7Cxss%20(vuln%7Cattack%7Cissue)%7C(validate%7Csanitize).*%20(un(trusted%7Csafe)%7Cmalicious)
+' >A3 - Cross-Site Scripting (xss) </a>
+
+        </div>
+          <img src="img/xss.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(fix%7Cprevent%7Cprotect%7Cpatch%7Cfound).*%20((impro.*%20(auth%7Caccess.*%20control))%7Curl.*%20access)%7C((impro.*%20(auth%7Caccess.*%20control))%7Curl.*%20access).*%20(fix%7Cprevent%7Cprotect%7Cpatch%7Cfound)%7Cinsec.*%20direct%20obj.*%20ref.*%7Cdirect%20ref.*%7Cauth.*%20bypass.*%20control
+' >A4 - Broken Access Control </a>
+
+        </div>
+          <img src="img/bac.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(fix%7Cprevent%7Cprotect%7Cpatch%7Cfound).*%20((impro.*%20(auth%7Caccess.*%20control))%7Curl.*%20access)%7C((impro.*%20(auth%7Caccess.*%20control))%7Curl.*%20access).*%20(fix%7Cprevent%7Cprotect%7Cpatch%7Cfound)%7Cinsec.*%20direct%20obj.*%20ref.*%7Cdirect%20ref.*%7Cauth.*%20bypass.*%20control
+' >A5 - Security Misconfiguration (smis) </a>
+
+        </div>
+          <img src="img/smis.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(fix%7Cprevent%7Cfound%7Cprotect%7Cpatch).*%20(man.*in.*midle%7Cmitm%7Cbucket.*brig)%7C(un%7Cnot).*encrypt.*%20data%7C(weak%7Cbad%7Cunsafe).*(pass.*%20hash%7Ckey%20(gener%7Cmanagement))%7C(important%7Csafe).*%20header(s)%3F%20miss%7Cunsafe.*%20crypto%7C(change%7Cupdate%7Cadd).*%20(https%7Csec.*cookie.*%20flag)%7Crem.*%20http%7C(fix%7Crem).*%20(secret.*key%7Chash%20collision)%7C(patch%7Cfix%7Cprevent%7Cupgrade%7Cprotect).*%20(sha(-%7C%20)%3F1%7Cmd5%7Cmd2%7Cmd4%7C(3)%3Fdes%7Ccollision)' >A6 - Sensitive Data Exposure (sde) </a>
+
+        </div>
+          <img src="img/sde.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(detect%7Cblock%7Canswer%7Crespond%7Cprevent).*%20(attack%7Cexpolit)%7C(attack%7Cexpolit).*%20(detect%7Cblock%7Canswer%7Crespond%7Cprevent)' >A7 - Insufficient Attack Protection (iap)</a>
+
+        </div>
+          <img src="img/iap.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(fix%7Cprevent%7Cprotect%7Cfound%7Cpatch).*(cross(-%7C%20)%3Fsite.*(req%7Cref).*forgery%7Ccsrf%7Csea.*surf%7Cxsrf)%7C(cross(-%7C%20)%3Fsite.*(req%7Cref).*forgery%7Ccsrf%7Csea.*surf%7Cxsrf).*(fix%7Cprevent%7Cprotect%7Cfound%7Cpatch)%7C(one.*click%7Cautom).*attack%7Csess.*riding%7Cconf.*deput
+' >A8 - Cross-Site Request Forgery (csrf)</a>
+
+        </div>
+          <img src="img/csrf.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(vuln%7C(un%7Cnot%20)safe%7Cmalicious).*%20(version%7Cdependenc%7Ccomponent%7Clibrar)' >A9 - Using Components with Known Vulnerabilities (ucwkv)</a>
+
+        </div>
+          <img src="img/ucwkv.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(fix%7Cprotect).*%20api%7Capi.*%20(fix%7Cprotect)%7Csecure.*%20commun' >A10 - Underprotected APIs (upapi)</a>
+
+        </div>
+          <img src="img/upapi.svg" />
+      </div>
+
+
+      <div id="about">
+        <h1 id="projs"> Patterns - Others
+        </h1>
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#((path%7Cdir.*)%20trav%7C(dot-dot-slash%7Cdir.*%20trav%7Cdir.*%20climbing%7Cbacktracking).*(attack%7Cvuln%7Cissue%7Cproblem))' >- Path/Directory Traversal (pathtrav)</a>
+
+        </div>
+          <img src="img/pathtrav.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(dos%20%7C((distributed)%3F%20denial(-%7C%20)%3Fof(-%7C%20)%3Fservice)%7Cddos%20%7Cdeadlocks)' >- Distributed Denial-of-Service/Denial-of-Service (dos)</a>
+
+        </div>
+          <img src="img/dos.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(fix%7Crem%7Cpatch%7Cfound%7Cprevent)%20mem.*%20leak%7Cmem.*%20leak%20(fix%7Crem%7Cpatch%7Cfound%7Cprevent)' >- Memory Leaks (ml)</a>
+
+        </div>
+          <img src="img/ml.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(fix%7Crem%7Cpatch%7Cfound%7Cprevent).*context%20leak%7Ccontext%20leak.*(fix%7Crem%7Cpatch%7Cfound%7Cprevent)' >- Context Leaks (cl)</a>
+
+        </div>
+          <img src="img/cl.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(fix%7Crem%7Cpatch%7Cfound%7Cprevent).*%20resource.*%20leaks%7Cresource.*%20leaks%20(fix%7Crem%7Cpatch%7Cfound%7Cprevent)' >- Resource Leaks (rl)</a>
+
+        </div>
+          <img src="img/rl.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(fix%7Crem%7Cpatch%7Cfound%7Cprevent).*%20overflow%7Coverflow.*%20(fix%7Crem%7Cpatch%7Cfound%7Cprevent)' >- Overflow (over)</a>
+
+        </div>
+          <img src="img/over.svg" />
+      </div>
+
+      <div id="about">
+        <div class="text">
+          <a href='https://regexper.com/#(fix%7Cfound%7Cprevent%7Cprotect%7Cpatch).*sec.*(bug%7Cvulnerab%7Cproblem%7Cdefect%7Cwarning%7Cissue%7Cweak%7Cattack%7Cflaw%7Cfault%7Cerror)%7Csec.*%20(bug%7Cvulnerab%7Cproblem%7Cdefect%7Cwarning%7Cissue%7Cweak%7Cattack%7Cflaw%7Cfault%7Cerror).*(fix%7Cfound%7Cprevent%7Cprotect%7Cpatch)%7Cvulnerab%7Cattack%7Ccve-%7Cnvd-%7Ccwe-' >- Miscellaneous (misc)</a>
+
+        </div>
+          <img src="img/misc.svg" />
+          <br><br>
+      </div>
+
+
+
+
+
+    <div class="footer">
+    <div class="row">
+    <p>
+      2017 | FEUP | IST
+    </p>
+
+
+
+    </div></div>
+
+
+
+           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+           <script src="https://d3js.org/d3.v4.min.js"></script>
+           <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>
