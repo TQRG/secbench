@@ -1,4 +1,4 @@
-# Secbench Dataset & Mining Tool
+# Secbench Dataset
 
 Secbench is a database of security vulnerabilities fixes mined from Github. We mined 238 projects - accounting to more than 1M commits - for 16 different vulnerabilities [patterns](https://tqrg.github.io/secbench/patterns.html). Meanwhile (in 2020), the dataset was updated. The database integrates 676 real security vulnerabilities from 114 different projects. 
 
