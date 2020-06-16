@@ -21,13 +21,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-
+	<script src="https://kit.fontawesome.com/73eca9982e.js" crossorigin="anonymous"></script>
+	
   </head>
 <body>
+
 
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container-fluid">
@@ -39,18 +39,19 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="patterns.html">Patterns</a></li>
 		<li><a href="#publications">Publications</a></li>
-        <!--<li><a href="results.html"><i class="fa fa-bar-chart" aria-hidden="true"></i>Tools</a></li>-->
       </ul>
     </div>
     </div>
     </nav>
 
+
+
 <div id="intro">
 	<div class="row">
 	<div class="col-md-12">
     <div class="title">
-    <a href="https://github.com/TQRG/secbench-mining-tool"><h1>SECBENCH <i class="fa fa-github" aria-hidden="true"></i></h1></a>
-    <span class="label">#security</span><span class="label">#vulnerabilities</span><span class="label">#benchmark</span><span class="label">#staticanalysis</span>
+    <a href="https://github.com/TQRG/secbench"><h1>SECBENCH <i class="fab fa-github" aria-hidden="true"></i></h1></a>
+    <span class="label">#security</span><span class="label">#fixes</span><span class="label">#vulnerabilities</span><span class="label">#benchmark</span>
     </div>
     </div>
 </div>
@@ -60,33 +61,16 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="text">
-      	 	   Study about the performance and coverage of open-source static analysis tools when scanning for real security vulnerabilities mined from GitHub.
+      	 	   Dataset of 676 security vulnerabilities fixes. In 2017, we mined the commits messages of 238 projects using regular expressions for each vulnerability (cf. <a href="patterns.html">Patterns</a>). In 2020, we classified vulnerabilities using the CWE taxonomy. Some vulnerabilities contain the score and severity information (CVEs). If you use our dataset, please, cite one of the papers below. 
     		</div>
 		</div>
+		
+		<a download href="../dataset/secbench.csv">
+		  <i class="fas fa-download"></i> Download
+		</a>
+		
 	</div>
-		<br>
-		<br>
-		<div class="row">
-    		<div class="col-md-2"></div>
-          	
-			<div class="col-md-2">
-			<a class="github-button" href="https://github.com/tqrg/secbench-mining-tool/subscription" data-icon="octicon-eye" data-style="mega" data-count-href="/tqrg/secbench-mining-tool/watchers" data-count-api="/repos/tqrg/secbench-mining-tool#subscribers_count" data-count-aria-label="# watchers on GitHub" aria-label="Watch tqrg/secbench-mining-tool on GitHub">Watch</a>                            
-			</div>
-			
-			<div class="col-md-2">
-            <a class="github-button" href="https://github.com/tqrg/secbench-mining-tool" data-icon="octicon-star" data-style="mega" data-count-href="/tqrg/secbench-mining-tool/stargazers" data-count-api="/repos/tqrg/secbench-mining-tool#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star tqrg/secbench-mining-tool on GitHub">Star</a>
-            </div>
-					  
-            <div class="col-md-2">
-            <a class="github-button" href="https://github.com/tqrg/secbench-mining-tool/fork" data-icon="octicon-repo-forked" data-style="mega" data-count-href="/tqrg/secbench-mining-tool/network" data-count-api="/repos/tqrg/secbench-mining-tool#forks_count" data-count-aria-label="# forks on GitHub" aria-label="Fork tqrg/secbench-mining-tool on GitHub">Fork</a>
-			</div>
-
-    		<div class="col-md-2">
-    		<a class="github-button" href="https://github.com/tqrg/secbench-mining-tool/archive/master.zip" data-icon="octicon-cloud-download" data-style="mega" aria-label="Download tqrg/secbench-mining-tool on GitHub">Download</a>
-			</div>
-			
-			<div class="col-md-2"></div>
-	</div>
+		
 </div>
 
 <div class="row">
@@ -95,8 +79,8 @@
 			 <h4>PUBLICATIONS</h4>
 		</div>
 		<ul>
-			<li>Sofia Reis and Rui Abreu. 2017. <a href="https://www.igi-global.com/gateway/article/201213">A Database of Existing Vulnerabilities to Enable Controlled Testing Studies</a>. International Journal of Secure Software Engineering 8, 3 (July 2017), 1-23. DOI: https://doi.org/10.4018/IJSSE.2017070101</li>
-			<li>Sofia Reis and Rui Abreu. 2017. <a href="http://ceur-ws.org/Vol-1977/paper6.pdf">SECBENCH: A Database of Real Security Vulnerabilities</a>. Secure Software Engineering in DevOps and Agile Development (SecSE) co-located with ESORICS, 69-85.</li>
+			<ol><strong>[1]</strong> Sofia Reis and Rui Abreu. 2017. <a href="http://ceur-ws.org/Vol-1977/paper6.pdf">SECBENCH: A Database of Real Security Vulnerabilities</a>. Secure Software Engineering in DevOps and Agile Development (SecSE) co-located with ESORICS, 69-85.</ol>
+			<ol><strong>[2]</strong> Sofia Reis and Rui Abreu. 2017. <a href="https://www.igi-global.com/gateway/article/201213">A Database of Existing Vulnerabilities to Enable Controlled Testing Studies</a>. International Journal of Secure Software Engineering 8, 3 (July 2017), 1-23. DOI: https://doi.org/10.4018/IJSSE.2017070101</ol>
 		</ul>
 	</div>
 </div>
@@ -109,14 +93,14 @@
     				<div class="col-md-3">
           		  	</div>
     				<div class="col-md-3 element">
-      				  <img class="img-circle" src="https://pbs.twimg.com/profile_images/1139931503981408258/YteCBw3p_400x400.jpg"></img>
+      				  <img class="img-circle" src="https://avatars1.githubusercontent.com/u/6732277?s=460&u=37718c8e0d5e41951de5c4bbcf745d2852e8cd37&v=4"></img>
       					<p><strong><a href="https://twitter.com/sofiaoreis">SOFIA REIS</a></strong></p>
-     				   <span>- PhD Student @Técnico   -</span>
+     				   <span>PhD Student @istecnico</span>
     			   </div>
     			   <div class="col-md-3 element">
       				 <img class="img-circle" src="https://pbs.twimg.com/profile_images/729162561996783617/OGhVHVRI_400x400.jpg"></img>
       			   		<p><strong><a href="https://twitter.com/rmaranhao">RUI MARANHÃO</a></strong></p>
-      				  	<span>- Associate Professor @Técnico -</span>
+      				  	<span>Associate Professor @istecnico</span>
     				</div>
     				<div class="col-md-3">
     				</div>
@@ -128,7 +112,7 @@
 <div class="footer">
     	<div class="row">
 			<div class="col-md-12 element">
-				2019&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://sigarra.up.pt/feup/en/web_page.inicial">FEUP</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://tecnico.ulisboa.pt/en/">Técnico</a>
+				2020&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://sigarra.up.pt/feup/en/web_page.inicial">FEUP</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://tecnico.ulisboa.pt/en/">Técnico</a>
 			</div>
     	</div>
 	</div>

@@ -3,6 +3,12 @@
 
 }
 
+#about > div > div > div > a,
+body > div > div > ul > ol > a{
+    color: #9c27b0;
+	
+}
+
 .axis text{
   fill: white;
 }
