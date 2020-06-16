@@ -4,13 +4,15 @@ Secbench is a database of security vulnerabilities fixes mined from Github. We m
 
 Our main goal with this approach is the identification and extraction of real security vulnerabilities patched by developers. We started with the identification of several security patterns to use on our [mining tool](https://github.com/TQRG/secbench-mining-tool). To understand what would be the most popular patterns on Github, we based ourselves on Github searches and Top 10 OSWAP 2017. Thereafter, we kept adding more patterns and we still have place for many more. The patterns were used for mining commits' messages. As we can see on the figure below, after saving the data there is an evaluation process to validate whether the caught sample is really the fix of a security vulnerability or not. If approved, the sample's information is updated on the database and, consequently, the test case is added to the final database. After the 2020 update, the patterns used to mine vulnerabilities were converted to the CWE classification system. Score/severity was added to the vulnerabilities classified with a CVE code. Each entry has the information to the fix (sha) and vulnerable code (sha-p).
 
-**If you use the dataset in your research, please cite one of the publications above.**
+**Research:** If you use the datase, cite it.
 
 ### Versions
 
 2020 v. [Dataset](https://github.com/TQRG/secbench/blob/master/dataset/secbench.csv)
 
 # Publications
+
+**If you use the dataset in your research, please cite one of the publications below:**
 
 "A Database of Existing Vulnerabilities to Enable Controlled Testing Studies" Sofia Reis & Rui Abreu, International Journal of Secure Software Engineering (IJSSE) 2017 [[Paper]](https://www.igi-global.com/article/a-database-of-existing-vulnerabilities-to-enable-controlled-testing-studies/201213)
 
