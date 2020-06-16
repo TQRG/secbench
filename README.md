@@ -1,19 +1,16 @@
 # Secbench Dataset & Mining Tool
 
-_Soon_: SecBench++
-
-Secbench is a database of fixes of real security vulnerabilities mined from Github. We mined 238 projects - accounting to more than 1M commits - for 16 different vulnerability [patterns](https://tqrg.github.io/secbench/patterns.html), yielding a database with 602 real security vulnerabilities. 
+Secbench is a database of fixes of real security vulnerabilities mined from Github. We mined 238 projects - accounting to more than 1M commits - for 16 different vulnerabilities [patterns](https://tqrg.github.io/secbench/patterns.html), yielding a database with 676 real security vulnerabilities from 114 projects. 
 
 Our main goal with this approach is the identification and extraction of real security vulnerabilities patched by developers. We started with the identification of several security patterns to use on our [mining tool](https://github.com/TQRG/secbench-mining-tool). To understand what would be the most popular patterns on Github, we based ourselves on Github searches and Top 10 OSWAP 2017. Thereafter, we kept adding more patterns and we still have place for many more. The patterns were used for mining commits' messages. As we can see on the figure below, after saving the data there is an evaluation process to validate whether the caught sample is really the fix of a security vulnerability or not. If approved, the sample's information is updated on the database and, consequently, the test case is added to the final database.
 
+Meanwhile (in 2020), the dataset was updated. Now, we use the CWE classification system and added score/severity to the vulnerabilities classified with a CVE code. 
 
-### Test Cases Structure
-
-Every time a pattern is found in a commit by the mining tool, a test case is created. The test case has 3 folders: Vfix with the non-vulnerable source code from the commit where the pattern was caught (child), Vvul with the vulnerable source code from the previous commit (parent) which we consider the real vulnerability; and, Vdiff with two folders, added and deleted, where the added lines to fix the vulnerability and the deleted lines that represent the security vulnerability are stored (as we can see in the figure below).
+Each entry has the information to the fix (sha) and vulnerable code (sha-p).
 
 ### Versions
 
-
+2020 v. [Dataset](https://github.com/TQRG/secbench/blob/master/dataset/secbench.csv)
 
 # Publications
 
