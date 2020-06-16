@@ -1,12 +1,10 @@
 # Secbench Dataset & Mining Tool
 
-Secbench is a database of fixes of real security vulnerabilities mined from Github. We mined 238 projects - accounting to more than 1M commits - for 16 different vulnerabilities [patterns](https://tqrg.github.io/secbench/patterns.html), yielding a database with 676 real security vulnerabilities from 114 projects. 
+Secbench is a database of security vulnerabilities fixes mined from Github. We mined 238 projects - accounting to more than 1M commits - for 16 different vulnerabilities [patterns](https://tqrg.github.io/secbench/patterns.html). Meanwhile (in 2020), the dataset was updated. The database integrates 676 real security vulnerabilities from 114 different projects. 
 
-Our main goal with this approach is the identification and extraction of real security vulnerabilities patched by developers. We started with the identification of several security patterns to use on our [mining tool](https://github.com/TQRG/secbench-mining-tool). To understand what would be the most popular patterns on Github, we based ourselves on Github searches and Top 10 OSWAP 2017. Thereafter, we kept adding more patterns and we still have place for many more. The patterns were used for mining commits' messages. As we can see on the figure below, after saving the data there is an evaluation process to validate whether the caught sample is really the fix of a security vulnerability or not. If approved, the sample's information is updated on the database and, consequently, the test case is added to the final database.
+Our main goal with this approach is the identification and extraction of real security vulnerabilities patched by developers. We started with the identification of several security patterns to use on our [mining tool](https://github.com/TQRG/secbench-mining-tool). To understand what would be the most popular patterns on Github, we based ourselves on Github searches and Top 10 OSWAP 2017. Thereafter, we kept adding more patterns and we still have place for many more. The patterns were used for mining commits' messages. As we can see on the figure below, after saving the data there is an evaluation process to validate whether the caught sample is really the fix of a security vulnerability or not. If approved, the sample's information is updated on the database and, consequently, the test case is added to the final database. After the 2020 update, the patterns used to mine vulnerabilities were converted to the CWE classification system. Score/severity was added to the vulnerabilities classified with a CVE code. Each entry has the information to the fix (sha) and vulnerable code (sha-p).
 
-Meanwhile (in 2020), the dataset was updated. Now, we use the CWE classification system and added score/severity to the vulnerabilities classified with a CVE code. 
-
-Each entry has the information to the fix (sha) and vulnerable code (sha-p).
+**If you use the dataset in your research, please cite one of the publications above.**
 
 ### Versions
 
