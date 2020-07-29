@@ -13,9 +13,9 @@ def connect_to_db(cf_filename):
             port=redis_cf['redis']['port'],
             password=redis_cf['redis']['password'])
         print('Succesfully connected to the database!')
-        return r;
+        return r
     except Exception as ex:
-        print 'Error:', ex
+        print('Error:', ex)
         exit('Failed to connect, terminating.')
 
 # connect to github
@@ -25,18 +25,18 @@ def connect_to_github(cf_filename):
         # authentication for Github API
         g = Github(data['github']['username'], data['github']['token'])
         print('Succesfully connected to github!')
-        return g;
+        return g
     except BadCredentialsException as ex:
-        print 'Error:', ex
+        print('Error:', ex)
         exit('\nSomething went wrong, check your GitHub credentials on the config.json file.')
 
 def connect_to_gcloud_storage():
     storage_client = storage.Client()
-    return storage_client;
+    return storage_client
 
 def get_bucket(storage_client, bucket_name):
     try:
         bucket = storage_client.get_bucket(bucket_name)
     except google.cloud.exceptions.NotFound:
         print('Sorry, that bucket does not exist!')
-    return bucket;
+    return bucket
