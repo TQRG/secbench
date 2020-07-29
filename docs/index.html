@@ -10,6 +10,61 @@
 
   gtag('config', 'UA-109337724-1');
 </script>
+<script type="application/ld+json">
+    {
+      "@context":"https://schema.org/",
+      "@type":"Dataset",
+      "name":"Secbench",
+      "description":"A database of real security vulnerability patches collected from GitHub.",
+      "url":"https://tqrg.github.io/secbench/",
+      "sameAs":"https://github.com/TQRG/secbench",
+      "identifier": ["https://doi.org/10.4018/IJSSE.2017070101","http://ceur-ws.org/Vol-1977/paper6.pdf"],
+      "keywords":[
+         "SOFTWARE > SECURITY > VULNERABILITIES",
+         "SOFTWARE > SECURITY > REAL VULNERABILITIES",
+      	"SOFTWARE > SECURITY > PATCHES",
+         "SOFTWARE > GITHUB"
+      ],
+      "license" : "https://github.com/TQRG/secbench/blob/master/license.txt",
+      "creator":[
+    {
+        "@type": "Person",
+        "sameAs": "https://orcid.org/0000-0002-5690-2279",
+        "givenName": "Sofia",
+        "familyName": "Reis",
+        "name": "Sofia Reis"
+    },
+    {
+        "@type": "Person",
+        "sameAs": "https://orcid.org/0000-0003-3734-3157",
+        "givenName": "Rui",
+        "familyName": "Abreu",
+        "name": "Rui Abreu"
+    },
+    {
+        "@type": "Organization",
+        "sameAs": "https://tqrg.github.io/",
+        "name": "The Quasar Research Group"
+      }],
+      "includedInDataCatalog":{
+         "@type":"DataCatalog",
+         "name":"https://tqrg.github.io/secbench/"
+      },
+      "distribution":[
+         {
+            "@type":"DataDownload",
+            "encodingFormat":"CSV",
+            "contentUrl":"https://tqrg.github.io/secbench/"
+         },
+         {
+            "@type":"DataDownload",
+            "encodingFormat":"CSV",
+            "contentUrl":"https://github.com/TQRG/secbench/blob/master/dataset/secbench.csv"
+         }
+      ],
+      "temporalCoverage":"1999-01-01/2017-07-30"
+    }
+    </script>
     <title>Secbench</title>
 <meta charset="utf-8">
 <meta name="description" content="Study about the performance and coverage of open-source static analysis tools when scanning for real security vulnerabilities mined from GitHub.
