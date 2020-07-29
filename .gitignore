@@ -2,7 +2,9 @@ config.json
 .idea/misc.xml
 *.DS_Store
 *.xml
-
+data/*
+*.vscode/
+*__pycache__/
 .idea/secbench.iml
 
 repos-collector/github/config.json
