@@ -1,12 +1,29 @@
+* {
+  font-family: 'Nunito', sans-serif;
+}
+
+body {
+  background-color: #333;
+}
+
 .axis text {
   font: 10px sans-serif;
-
 }
 
 #about > div > div > div > a,
 body > div > div > ul > ol > a{
-    color: #9c27b0;
-	
+    color: #000;
+    background-color: #FFEB3B;
+}
+
+#about > div > div > div > a:hover,
+body > div > div > ul > ol > a:hover{
+  color: #333;
+  border-bottom:4px solid #333;
+}
+
+ol {
+  padding-bottom: 3px;
 }
 
 .axis text{
@@ -24,7 +41,7 @@ body > div > div > ul > ol > a{
 }
 
 #projs{
-  color: #9c27b0;
+  color: #333;
 }
 
 #vulns{
@@ -33,7 +50,11 @@ body > div > div > ul > ol > a{
 
 
 #about > div > a{
-  color: #673AB7;
+  color: #333;
+}
+
+#about > div > a > button:hover{
+  padding: 5px 10px;
 }
 
 
@@ -57,11 +78,9 @@ label {
   right: 10px;
 }
 
-* {
-
-    font-family: 'Nunito', sans-serif;
-
-
+.btn {
+  color: #FFEB3B;
+  background-color: #000;
 }
 
 .navbar-default .navbar-brand{
@@ -69,7 +88,7 @@ label {
 }
 
 .container-fluid{
-  background-color: #673AB7;
+  background-color: #333;
 }
 
 body{
@@ -88,33 +107,35 @@ body{
 }
 
 .navbar-default .navbar-nav>li>a, .navbar-brand, .navbar-nav>li>a{
-  color: rgba(255,252,0,1);
+  color: #ffeb3b;
   text-shadow: none;
 
 }
 
+.navbar-default .navbar-nav>li>a:hover{
+  color: #ffeb3b;
+  border-bottom:2px solid #ffeb3b;
+}
+
 #intro{
-  background-color: #673ab7;
-  padding-bottom: 50px;
+  background-color: #333;
+  padding-bottom: 30px;
 }
 
 .navbar{
   margin-bottom: 0px;
 }
 
-.navbar-default{
-  border-color: #FFEB3B;
-}
-
 .label{
-  background-color: #9c27b0;
+  background-color: #FFEB3B;
+  color: #000;
   font-size: 100%;
   margin: 5px;
 }
 
 .img-circle {
-    border-radius: 50%;
-    width: 40%;
+  border-radius: 40%;
+  width: 30%;
 
 }
 
@@ -122,8 +143,12 @@ body{
   padding: 20px;
 }
 
+.row{
+  padding-bottom: 2%;
+}
+
 #intro, #about, #authors, #publications{
-  padding-top: 5%;
+  padding-top: 1%;
   justify-content:center;
   align-items:center;
   text-align: center;
@@ -135,24 +160,34 @@ body{
 
 .fa{
   font-size: 1em;
+}
 
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+  color: rgba(255,252,0,0.95);
+}
+
+#authors > div > div > p > strong > a{
+  color: #333;
+  background-color: #ffeb3b;
+}
+
+#authors > div > div > p > strong > a:hover{
+  border-bottom:4px solid #333;
+}
+
+#authors > div > div > span > a > i{
+  color: #333;
 }
 
 .title h1{
-  padding-bottom:1%;
+  padding-top: 3%;
+  padding-bottom:2%;
 }
 
-
-
-#authors span{
-  color: #292626;
-}
 
 #authors{
-  padding: 50px;
+  padding: 40px;
 }
-
-
 
 #intro h1{
   font-size: 4em;
@@ -160,7 +195,7 @@ body{
 
 #authors h3{
   padding-bottom: 30px;
-  color: #9c27b0;
+  color: #1f0724;
 }
 
 #authors p{
@@ -168,11 +203,8 @@ body{
   color: white;
 }
 
-#authors div > p > strong > a{
-  color: #3f51b5;
-}
 
-a{
+a {
   color: #ffeb3b;
   text-decoration: none;
 
@@ -182,20 +214,23 @@ a{
   float: left;
 }
 
+.btn.focus, .btn:focus, .btn:hover{
+  color: #ffeb3b;
+}
+
 
 .text{
   padding-left: 15%;
   padding-right: 15%;
-  color: #673ab7;
   text-align: justify;
   font-size: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 50px;
+  padding-top: 30px;
 }
 
 a:hover{
-  color: rgba(255,252,0,0.8);
+  color: rgba(255,252,0,0.95);
   text-decoration: none;
-
 }
 
 #intro h3{
@@ -211,23 +246,22 @@ a:hover{
   bottom: 0;
   left: 0;
   padding: 1rem;
-  background-color: #673ab7;
+  background-color: #333;
+  color: white;
   text-align: center;
 }
 
-.footer p{
-  color:white;
+body > div.footer > div > div > a{
+  color: #FFEB3B;
 }
 
-
-body > div.footer > div > div > a,
-body > div.footer > div > div  {
-	color: white;
+body > div.footer > div > div > a:hover{
+  color: rgba(255,252,0,0.8);
 }
 
 #publications > h4,
 #authors > h4 {
-    color: #9c27b0;
+    color: #333;
 	padding: 20px;
 }
 
@@ -236,7 +270,4 @@ ul{
 	margin-right: 200px;
 }
 
-body > div > div > ul > li > a {
-	color: #673ab7;
-}
 
