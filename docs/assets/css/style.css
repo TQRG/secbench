@@ -145,6 +145,7 @@ body{
 
 .row{
   padding-bottom: 2%;
+  margin-right: unset;
 }
 
 #intro, #about, #authors, #publications{
