@@ -11,13 +11,17 @@ body {
 }
 
 #about > div > div > div > a,
-body > div > div > ul > ol > a{
+body > div > div > ul > ol > a,
+body > div.container > div > div > ul > ol > a,
+#about > div > div > div > div > a{
     color: #000;
     background-color: #FFEB3B;
 }
 
 #about > div > div > div > a:hover,
-body > div > div > ul > ol > a:hover{
+body > div > div > ul > ol > a:hover,
+body > div.container > div > div > ul > ol > a:hover,
+#about > div > div > div > div > a:hover{
   color: #333;
   border-bottom:4px solid #333;
 }
