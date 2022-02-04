@@ -1,4 +1,4 @@
-owner,project,sha,sha-p,year,language,cve_id,cwe,score,severity
+owner,project,sha,sha-p,year,language,cve_id,cwe_id,score,severity
 pfsense,pfsense,002bc4ab3268e6e5cb3a01ce73a4c1624d09050a,d6a0379d291f5e98500776618559343f40254e40,2010,php,,CWE-77,,
 nextcloud,server,0074062b5329c3d43679909fddce2d70608a4475,5c6a7172cafc395d38c58d1b5afd6b36efb33ad5,2012,php,,CWE-79,,
 nextcloud,server,0241ddc759f7e2d2695c4626df5d2ac27b8b1d90,c2e2c59ca7aa873bd07de04ea701a8b351383aec,2014,php,,CWE-384,,
