@@ -34,42 +34,42 @@ csrf = re.compile('(cross.*site.*(req|ref).*forgery| csrf |sea.*surf| xsrf |(one
 # path traversal
 pathtrav = re.compile('((path|dir.*) traver.*|(dot-dot-slash|directory traversal|directory climbing|backtracking).*(attack|vuln))');
 # denial of service
-dos = re.compile('( dos |((distributed)? denial.*of.*service)| ddos |deadlocks)');
+dos = re.compile('( dos |((distributed)? denial.*of.*service)| ddos |deadlocks)')
 # sha-1 collision
-sha1 = re.compile('(sha-1|sha 1|sha1) collision');
+sha1 = re.compile('(sha-1|sha 1|sha1) collision')
 # misc
 misc = re.compile('(fix|found|prevent|protect).*sec.*(bug|vulnerab|problem|defect|warning|issue|weak|attack|flaw|fault|error)|sec.* (bug|vulnerab|problem|defect|warning|issue|weak|attack|flaw|fault|error).* (fix|found|prevent|protect)|vulnerab|attack');
 # memory leaks
-ml = re.compile('mem.* leak|(fix|inc).* mem.* alloc');
+ml = re.compile('mem.* leak|(fix|inc).* mem.* alloc')
 
 bufover = re.compile('buff.* overflow')
 fpd = re.compile('(full)? path discl')
-nullp = re.compile('null pointers');
-resl = re.compile('res.* leaks');
-hl = re.compile('hand.* (leak|alloc)');
+nullp = re.compile('null pointers')
+resl = re.compile('res.* leaks')
+hl = re.compile('hand.* (leak|alloc)')
 encryp = re.compile('encryp.* (bug|vulnerab|problem|defect|warning|issue|weak|attack|flaw|fault|error)')
 
 
 def add_blobs(diff,vulPath):
     for f in diff:
         if f.a_blob is not None:
-            pathA=vulPath + 'Vdiff/added/' + f.a_path;
+            pathA=vulPath + 'Vdiff/added/' + f.a_path
             check_if_dir_exists(pathA)
             try:
                 f.a_blob.stream_data(open(pathA, 'wb'))
             except Exception as ex:
-                print 'Ex:', ex
+                print('Ex:', ex)
         if f.b_blob is not None:
-            pathB=vulPath + 'Vdiff/deleted/' + f.b_path;
+            pathB=vulPath + 'Vdiff/deleted/' + f.b_path
             check_if_dir_exists(pathB)
             try:
                 f.b_blob.stream_data(open(pathB, 'wb'))
             except Exception as ex:
-                print 'Ex:', ex
+                print('Ex:', ex)
 
 def save_results(conn, start, datetime,vuls):
     stop = time.time()
-    t = stop-start;
+    t = stop-start
     conn.incr('stats:experiment:n')
     add_experiment(conn, datetime, V_CLASS, t, vuls)
     if os.path.exists('repos/'):
@@ -79,9 +79,9 @@ def save_results(conn, start, datetime,vuls):
 
 def mine_repos(user, repos, br):
 
-    global conn, g , V_CLASS, bucket;
+    global conn, g , V_CLASS, bucket
 
-    id_repo = user+'_'+repos;
+    id_repo = user+'_'+repos
     print(id_repo)
     path = 'db/'+id_repo+'/'+V_CLASS+'/'
 
@@ -94,10 +94,10 @@ def mine_repos(user, repos, br):
     print('Downloading...')
     c_url = g.get_user(user).get_repo(repos).clone_url
     repo = git.Repo.clone_from(c_url, 'repos/' + id_repo + '/', branch=br)
-    commits = list(repo.iter_commits());
+    commits = list(repo.iter_commits())
     print('Downloaded...')
 
-    n = 0;
+    n = 0
     for c in tqdm(commits):
 
         message = c.message
@@ -124,10 +124,10 @@ def mine_repos(user, repos, br):
         parents = list(c.parents)
 
         if check is not None and len(parents) > 0 and commit_exists(conn, user, repos, str(c), str(V_CLASS)) == False:
-            n += 1;
+            n += 1
 
             print(c)
-            vpath = path + 'vuln'+ str(n) +'/';
+            vpath = path + 'vuln'+ str(n) +'/'
 
             os.makedirs(os.path.dirname(vpath))
             repo.head.reference = c
@@ -148,12 +148,12 @@ def mine_repos(user, repos, br):
                 vulParent = parents[0]
                 diff = c.diff(vulParent, create_patch=True)
 
-            repo.head.reference = vulParent;
+            repo.head.reference = vulParent
 
             archive_vuln(vpath + 'Vvul.tar', repo)
             send_blob(bpath + 'Vvul.tar', vpath + 'Vvul.tar', bucket)
 
-            commit_url = g.get_user(user).get_repo(repos).get_commit(str(c)).html_url;
+            commit_url = g.get_user(user).get_repo(repos).get_commit(str(c)).html_url
 
             if commit_exists(conn, user, repos, str(c), V_CLASS) == False:
                 add_commit(conn, n, user, repos, V_CLASS, str(c), vulParent, '', '', '', '', commit_url)
@@ -168,29 +168,29 @@ def mine_repos(user, repos, br):
             shutil.rmtree(vpath + 'Vdiff')
 
     shutil.rmtree(path)
-    return n;
+    return n
 
     # check arguments
 if (len(sys.argv) != 2):
     print("Usage: python repos_miner.py <class>")
     sys.exit(0)
 
-g = connect_to_github('config.json');
-conn = connect_to_db('redis.json');
-sgc = connect_to_gcloud_storage();
-bucket = get_bucket(sgc, 'secbench1');
+g = connect_to_github('config.json')
+conn = connect_to_db('redis.json')
+sgc = connect_to_gcloud_storage()
+bucket = get_bucket(sgc, 'secbench1')
 
 # get normal repositories
 repos = get_repos_n(conn)
 
 # datetime
-datetime = time.strftime("%x") + ':' + time.strftime("%X");
+datetime = time.strftime("%x") + ':' + time.strftime("%X")
 
 # start measuring time
 start = time.time()
 
 # number of caught vulnerabilities
-vuls = 0;
+vuls = 0
 
 # mine each repository
 try:
