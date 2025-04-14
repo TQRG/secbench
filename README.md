@@ -16,8 +16,6 @@ We are currently working on a new version of the dataset.
 
 **If you use the dataset in your research, please, cite one of the publications below:**
 
-"A Database of Existing Vulnerabilities to Enable Controlled Testing Studies" Sofia Reis & Rui Abreu, International Journal of Secure Software Engineering (IJSSE) 2017 [[Paper]](https://www.igi-global.com/article/a-database-of-existing-vulnerabilities-to-enable-controlled-testing-studies/201213)
-
 "SECBENCH: A Database of Real Security Vulnerabilities" Sofia Reis & Rui Abreu, SECSE 2017, Oslo, Norway [[Paper]](http://ceur-ws.org/Vol-1977/paper6.pdf)
 
 "Using Github to Create a Dataset of Natural Occuring Vulnerabilities" Sofia Reis & Rui Abreu, DX 2017, Brescia, Italy [[Poster]](https://sofiaoreis.github.io/docs/dx17_poster.pdf) and [[Patterns]](https://tqrg.github.io/secbench/patterns.html)
